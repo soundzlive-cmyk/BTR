@@ -47,3 +47,5 @@
 @media(max-width:750px){.carousel{margin-top:30px}.carousel-slide{padding:8px}.carousel-btn{width:44px;height:44px;font-size:1.7rem}.carousel-prev{left:10px}.carousel-next{right:10px}.carousel-controls{gap:10px}}
 /* Footer social icons */
 .footer-social{display:flex;gap:12px;margin-top:20px}.footer-social a{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;transition:background .2s,color .2s}.footer-social a:hover{background:var(--gold);color:var(--navy)}.footer-social a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.footer-social svg{display:block}
+
+.event-form fieldset+.intake-field{margin-top:22px}
