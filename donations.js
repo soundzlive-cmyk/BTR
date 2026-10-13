@@ -19,7 +19,7 @@
       document.getElementById('goal-total').textContent = money(data.goal);
       document.getElementById('giving-fill').style.width = percent + '%';
       document.getElementById('giving-percent').textContent = Math.round(data.current / data.goal * 100) + '% of our goal';
-      document.getElementById('giving-remaining').textContent = data.current >= data.goal ? 'Goal reached — thank you!' : money(data.goal - data.current) + ' to go';
+      document.getElementById('giving-remaining').textContent = data.current >= data.goal ? 'Goal reached. Thank you!' : money(data.goal - data.current) + ' to go';
       const meter = document.getElementById('giving-meter');
       meter.setAttribute('aria-valuemax', data.goal);
       meter.setAttribute('aria-valuenow', Math.min(data.current, data.goal));
