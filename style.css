@@ -77,3 +77,20 @@
  .nav-group:hover .subnav,.nav-group:focus-within .subnav{display:none}
  .nav-group.open .subnav{display:flex}
 }
+
+/* Mobile review fixes */
+@media(max-width:650px){
+ .intake-layout{display:block}
+ .intake-sidebar{margin-bottom:28px}
+ .intake-sidebar ol{gap:0 22px}
+ .intake-sidebar li{padding:0}
+ .intake-sidebar li a{display:inline-block;padding:10px 0}
+}
+@media(max-width:750px){
+ .final-footer{align-items:start}
+ .final-footer>.footer-column{margin:0}
+ .final-footer>div:first-child{margin:0 0 4px}
+ .footer-column>a{margin:0;padding:8px 0}
+ .cd-unit small{font-size:11px}
+ .cd-unit b{font-size:13px}
+}
