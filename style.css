@@ -94,3 +94,5 @@
  .cd-unit small{font-size:11px}
  .cd-unit b{font-size:13px}
 }
+
+.about-story-text{grid-template-columns:1fr;max-width:760px}
