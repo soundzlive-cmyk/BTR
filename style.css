@@ -96,3 +96,6 @@
 }
 
 .about-story-text{grid-template-columns:1fr;max-width:760px}
+
+.source-gallery.gallery-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:750px){.source-gallery.gallery-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
