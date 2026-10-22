@@ -111,3 +111,13 @@ main input[type=checkbox],main input[type=radio]{width:22px;height:22px;min-widt
 @media(max-width:750px){.events-intro .actions{gap:12px}.events-intro .actions .button{flex:1 1 calc(50% - 6px);padding:14px 12px}.events-intro .actions .text-link{margin:6px 14px 0 0}}
 .tile-images .hero-photo img,.tile-images .giving-photo img{background:none;padding:0;border-radius:0}
 .tile-images .program-tiles>div,.tile-images .board-bio-photo,.tile-images .carousel-frame{background:#e3e8ed;padding:14px;border-radius:6px}.tile-images .program-tiles img,.tile-images .board-bio-photo img,.tile-images .carousel-frame img{background:none;padding:0;border-radius:0}
+:root{--red:#c62828;--black:#0d0d0d;--stripe:repeating-linear-gradient(-45deg,var(--red) 0 14px,#fff 14px 28px)}
+.announcement{background:var(--black)}
+header{position:relative;border-bottom:0}header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--black)}
+.final-footer{position:relative;border-top:0}.final-footer::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--black)}
+nav a[aria-current="page"]{text-decoration-color:var(--red)}
+.eyebrow,.about-story .eyebrow{color:var(--red)}
+.program-card{border-top-color:var(--black)}.program-card:not(.gold) .number{color:var(--red)}
+.text-link:hover{border-bottom-color:var(--red);text-decoration:none}
+.footer-social a{background:var(--black)}.footer-social a:hover{background:var(--red);color:#fff}
+.targets>div>.eyebrow,.youth-pathways .eyebrow,.giving-close>.eyebrow{color:var(--red)}
