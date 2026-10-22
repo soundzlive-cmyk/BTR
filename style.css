@@ -105,3 +105,9 @@
 .tile-images .source-gallery a{background:none;padding:0}
 .tile-images .source-gallery img{height:330px;object-fit:contain}
 @media(max-width:750px){.tile-images .source-gallery img{height:190px;max-height:none}}
+.contact-form-row .event-form{margin:0;max-width:none}.contact-form-row>img{height:auto;max-height:680px}
+.final-footer{align-items:start}.final-footer>.footer-column{margin:0}.final-footer .footer-column h3{margin-top:0}
+main input[type=checkbox],main input[type=radio]{width:22px;height:22px;min-width:22px;flex-shrink:0;accent-color:var(--navy)}
+@media(max-width:750px){.events-intro .actions{gap:12px}.events-intro .actions .button{flex:1 1 calc(50% - 6px);padding:14px 12px}.events-intro .actions .text-link{margin:6px 14px 0 0}}
+.tile-images .hero-photo img,.tile-images .giving-photo img{background:none;padding:0;border-radius:0}
+.tile-images .program-tiles>div,.tile-images .board-bio-photo,.tile-images .carousel-frame{background:#e3e8ed;padding:14px;border-radius:6px}.tile-images .program-tiles img,.tile-images .board-bio-photo img,.tile-images .carousel-frame img{background:none;padding:0;border-radius:0}
