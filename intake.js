@@ -31,7 +31,7 @@
   for (const id of ['sigGuardian','sigParticipant']) {
     const canvas = get(id), ctx = canvas.getContext('2d');
     let drawing = false, ink = false;
-    ctx.lineWidth=3; ctx.lineCap='round'; ctx.strokeStyle='#12253a'; ctx.fillStyle='#12253a';
+    ctx.lineWidth=3; ctx.lineCap='round'; ctx.strokeStyle='#111111'; ctx.fillStyle='#111111';
     const position = e => {const r=canvas.getBoundingClientRect(); return [(e.clientX-r.left)*canvas.width/r.width,(e.clientY-r.top)*canvas.height/r.height];};
     canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;drawing=true;ink=true;canvas.setPointerCapture(e.pointerId);const [x,y]=position(e);ctx.beginPath();ctx.arc(x,y,1.5,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.moveTo(x,y);});
     canvas.addEventListener('pointermove',e=>{if(!drawing)return;ctx.lineTo(...position(e));ctx.stroke();});
