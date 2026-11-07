@@ -27,7 +27,7 @@
       lastSuccess = new Date();
       status.textContent = 'Updated from BTR’s tracker ' + lastSuccess.toLocaleString('en-US') + '. Refreshes every minute.';
     } catch {
-      status.textContent = lastSuccess ? 'Latest refresh unavailable. Showing total received ' + lastSuccess.toLocaleString('en-US') + '.' : 'Last verified October 12, 2026. Live refresh unavailable; see the tracker for the latest total.';
+      status.textContent = lastSuccess ? 'Latest refresh unavailable. Showing total received ' + lastSuccess.toLocaleString('en-US') + '.' : 'Last verified November 7, 2026. Live refresh unavailable; see the tracker for the latest total.';
     } finally { clearTimeout(timer); busy = false; }
   }
   refresh();
