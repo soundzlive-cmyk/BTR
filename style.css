@@ -187,3 +187,6 @@ html.modal-open{overflow:hidden}
 .hero-rotator .hero-slide:first-child{position:relative}
 .hero-rotator:after{z-index:1}
 .hero-rotator figcaption{z-index:2}
+
+.about-story>img.img-70{width:70%;justify-self:center}
+@media(max-width:750px){.about-story>img.img-70{width:70%}}
