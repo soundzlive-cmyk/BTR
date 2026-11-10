@@ -166,9 +166,9 @@ html.modal-open{overflow:hidden}
 
 /* Home hero: slow zoom-and-pan ("Ken Burns") on the main photo */
 @keyframes heroDrift{
- 0%{transform:scale(1.04) translate(0,0)}
- 50%{transform:scale(1.14) translate(-2.5%,-1.5%)}
- 100%{transform:scale(1.04) translate(0,0)}
+ 0%{transform:scale(1.05) translate(0,0)}
+ 50%{transform:scale(1.22) translate(-4%,-2.5%)}
+ 100%{transform:scale(1.05) translate(0,0)}
 }
-.hero-photo img{transform-origin:50% 40%;animation:heroDrift 24s ease-in-out infinite;will-change:transform}
+.hero-photo img{transform-origin:50% 40%;animation:heroDrift 16s ease-in-out infinite;will-change:transform}
 @media(prefers-reduced-motion:reduce){.hero-photo img{animation:none;transform:none}}
