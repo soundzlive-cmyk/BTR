@@ -172,3 +172,11 @@ html.modal-open{overflow:hidden}
 }
 .hero-photo img{transform-origin:50% 40%;animation:heroDrift 16s ease-in-out infinite;will-change:transform}
 @media(prefers-reduced-motion:reduce){.hero-photo img{animation:none;transform:none}}
+
+/* Home video sound prompt */
+.video-sound-wrap{position:relative}
+.video-sound-btn{position:absolute;top:12px;left:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border:0;border-radius:999px;background:rgba(0,0,0,.75);color:#fff;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer}
+.video-sound-btn:hover{background:#000}
+.video-sound-btn[hidden]{display:none}
+
+@media(max-width:750px){.announcement>a{display:inline-block;padding:6px 0;min-height:32px}}
