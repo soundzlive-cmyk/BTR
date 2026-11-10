@@ -180,3 +180,10 @@ html.modal-open{overflow:hidden}
 .video-sound-btn[hidden]{display:none}
 
 @media(max-width:750px){.announcement>a{display:inline-block;padding:6px 0;min-height:32px}}
+
+/* Home banner rotator */
+.hero-rotator .hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.hero-rotator .hero-slide.is-active{opacity:1}
+.hero-rotator .hero-slide:first-child{position:relative}
+.hero-rotator:after{z-index:1}
+.hero-rotator figcaption{z-index:2}
