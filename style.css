@@ -135,3 +135,31 @@ nav a[aria-current="page"]{text-decoration-color:var(--red)}
 @media(max-width:650px){.home-walk-thumbs{grid-template-columns:1fr 1fr;gap:12px}.home-walk-thumbs a:last-child{display:none}.home-walk-stats{gap:32px}}
 
 .source-gallery .gallery-item{display:flex;align-items:center}
+
+/* Gala featured-speaker popup (home page) */
+html.modal-open{overflow:hidden}
+.gala-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .2s ease}
+.gala-modal[hidden]{display:none}
+.gala-modal.is-open{opacity:1}
+.gala-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72)}
+.gala-modal-panel{position:relative;width:min(920px,100%);max-height:calc(100vh - 48px);overflow:auto;background:#fff;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,.45);outline:none}
+.gala-modal-close{position:absolute;top:10px;right:10px;z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:28px;line-height:1;cursor:pointer}
+.gala-modal-close:hover{background:#000}
+.gala-modal-ticket{width:100%;height:auto;display:block;background:#000}
+.gala-modal-body{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:28px;padding:24px 28px 28px;align-items:start}
+.gala-modal-photo{width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:6px}
+.gala-modal-copy h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px}
+.gala-modal-copy p:not(.eyebrow){color:var(--muted);font-size:.98rem}
+.gala-modal-copy .eyebrow{color:var(--gold);margin-bottom:12px}
+.gala-modal-copy .actions{margin-top:22px}
+@media(max-width:700px){
+ .gala-modal{padding:12px;align-items:flex-start}
+ .gala-modal-panel{max-height:calc(100vh - 24px)}
+ .gala-modal-body{grid-template-columns:1fr;gap:18px;padding:20px}
+ .gala-modal-photo{max-width:220px;margin:0 auto;aspect-ratio:3/4;object-position:50% 20%}
+}
+@media(prefers-reduced-motion:reduce){.gala-modal{transition:none}}
+@media print{.gala-modal{display:none!important}}
+
+/* Sold-out label */
+.sold-out-badge{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 24px;border-radius:3px;background:#111;color:#fff;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.9rem;border:2px solid var(--gold)}
