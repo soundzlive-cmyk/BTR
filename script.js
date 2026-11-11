@@ -30,7 +30,7 @@ const menu=document.getElementById('menu');const nav=document.getElementById('na
 document.querySelectorAll('.nav-group').forEach(group => {
   const btn = group.querySelector('.sub-toggle');
   if (!btn) return;
-  const set = open => { group.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); btn.setAttribute('aria-label', (open ? 'Hide' : 'Show') + ' About menu'); };
+  const set = open => { group.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); btn.setAttribute('aria-label', (open ? 'Hide ' : 'Show ') + (group.querySelector('a')?.textContent.trim() || '') + ' menu'); };
   btn.addEventListener('click', e => { e.stopPropagation(); set(!group.classList.contains('open')); });
   document.addEventListener('click', e => { if (!group.contains(e.target)) set(false); });
   group.addEventListener('keydown', e => { if (e.key === 'Escape' && group.classList.contains('open')) { e.stopPropagation(); set(false); btn.focus(); } });
