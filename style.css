@@ -285,3 +285,15 @@ html.modal-open{overflow:hidden}
 .sc-pause{background:none;border:1px solid #555;color:#fff;border-radius:999px;padding:6px 14px;min-height:34px;cursor:pointer;font:inherit}
 @media(max-width:750px){.sc-btn{width:40px;height:40px;font-size:24px}}
 @media(prefers-reduced-motion:reduce){.sc-slide{transition:none}}
+
+/* Home sponsor marquee (scrolling logos) */
+.sponsor-marquee-section{padding-bottom:28px}
+.sponsor-marquee{overflow:hidden;padding:0 0 70px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.sm-track{list-style:none;margin:0;padding:0;display:flex;gap:18px;width:max-content;animation:smScroll 110s linear infinite}
+.sponsor-marquee:hover .sm-track,.sponsor-marquee:focus-within .sm-track{animation-play-state:paused}
+.sm-track li{flex:0 0 auto;width:384px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.12);background:#fff}
+.sm-track img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes smScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 9px))}}
+@media(max-width:750px){.sm-track li{width:240px}.sm-track{gap:12px;animation-duration:80s}@keyframes smScroll{to{transform:translateX(calc(-50% - 6px))}}}
+@media(prefers-reduced-motion:reduce){.sponsor-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.sm-track{animation:none}}
+.sponsor-marquee .sm-track img{padding:0;background:none;border-radius:0;box-shadow:none}
