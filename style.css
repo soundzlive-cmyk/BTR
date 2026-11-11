@@ -190,3 +190,12 @@ html.modal-open{overflow:hidden}
 
 .about-story>img.img-70{width:70%;justify-self:center}
 @media(max-width:750px){.about-story>img.img-70{width:70%}}
+
+/* Tablet tap targets and readability */
+@media(max-width:1000px){
+ .announcement>a{display:inline-block;padding:6px 0;min-height:32px}
+ .footer-column>a{margin:0;padding:8px 0}
+ .cd-unit small{font-size:11px}
+ .cd-unit b{font-size:13px}
+ .intake-sidebar .text-link,.intake-original{display:inline-block;padding:6px 0}
+}
