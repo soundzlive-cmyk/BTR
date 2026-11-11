@@ -297,3 +297,5 @@ html.modal-open{overflow:hidden}
 @media(max-width:750px){.sm-track li{width:240px}.sm-track{gap:12px;animation-duration:80s}@keyframes smScroll{to{transform:translateX(calc(-50% - 6px))}}}
 @media(prefers-reduced-motion:reduce){.sponsor-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.sm-track{animation:none}}
 .sponsor-marquee .sm-track img{padding:0;background:none;border-radius:0;box-shadow:none}
+
+main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:auto;margin-right:auto}
