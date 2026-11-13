@@ -312,3 +312,20 @@ main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:
  header>nav{justify-self:center;grid-column:2}
 }
 .home-welcome-grid>div>img.welcome-photo{width:100%}
+
+/* Newspaper-clipping frames (replaces grey image tiles) */
+.tile-images img,.tile-images .program-tiles>div,.tile-images .board-bio-photo,.tile-images .carousel-frame{
+ background:#f4eedf linear-gradient(135deg,rgba(255,255,255,.55),rgba(0,0,0,0) 40%,rgba(120,95,50,.06));
+ border:1px solid #d9ceb5;border-radius:1px;
+ box-shadow:0 1px 2px rgba(0,0,0,.10),0 12px 24px -6px rgba(0,0,0,.28);
+ transform:rotate(-.8deg)}
+.tile-images :nth-child(even)>img,.tile-images img:nth-child(even),.tile-images .program-tiles>div:nth-child(even){transform:rotate(.7deg)}
+/* items that should stay flat / unframed */
+.tile-images .hero-photo img,.tile-images .giving-photo img,.tile-images .program-tiles img,.tile-images .board-bio-photo img,.tile-images .carousel-frame img,.tile-images .sponsor-marquee img,.tile-images .gala-modal img,.tile-images .brand-logo{border:0;box-shadow:none;transform:none;background:none}
+.tile-images .story-cover,.tile-images .gala-art img{transform:none}
+@media(prefers-reduced-motion:reduce){}
+.tile-images .source-gallery img{width:auto;max-width:100%;height:auto;max-height:330px;margin:0 auto;display:block}
+.tile-images .source-gallery{align-items:center}
+@media(max-width:750px){.tile-images .source-gallery img{max-height:260px}}
+.tile-images .event-flyer{background:none}
+.tile-images .event-flyer img{width:auto;max-width:100%;margin:0 auto;display:block}
