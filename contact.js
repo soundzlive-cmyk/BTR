@@ -27,3 +27,15 @@
     } finally {clearTimeout(timer); submit.disabled = false;}
   });
 })();
+
+// Prefill the message when arriving from the Support menu
+(() => {
+  const box = document.getElementById('comments');
+  if (!box || box.value) return;
+  const msgs = {
+    mentor: "I'm interested in becoming a mentor with BTR. Please tell me how to get started.",
+    involved: "I just want to get involved with BTR. Please let me know how I can help."
+  };
+  const pick = msgs[new URLSearchParams(location.search).get('interest')];
+  if (pick) box.value = pick;
+})();
