@@ -299,3 +299,7 @@ html.modal-open{overflow:hidden}
 .sponsor-marquee .sm-track img{padding:0;background:none;border-radius:0;box-shadow:none}
 
 main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:auto;margin-right:auto}
+
+.home-welcome-grid>.rich-copy>.section-heading{margin-bottom:28px}
+.home-welcome .rich-copy .section-heading h2{font-size:clamp(2.1rem,3.5vw,3.3rem);line-height:1.08;letter-spacing:-.04em;color:var(--ink);margin:0}
+.home-welcome .rich-copy .section-heading .eyebrow{color:var(--gold);font-size:.78rem;font-weight:800;letter-spacing:.15em;margin:0 0 22px}
