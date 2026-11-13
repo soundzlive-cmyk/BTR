@@ -311,3 +311,4 @@ main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:
  header>.brand{justify-self:start}
  header>nav{justify-self:center;grid-column:2}
 }
+.home-welcome-grid>div>img.welcome-photo{width:100%}
