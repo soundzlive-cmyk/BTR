@@ -333,3 +333,14 @@ main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:
 .home-campaign+.quote-band{margin-top:-30px}
 .quote-band+.sponsor-marquee-section{padding-top:40px}
 @media(max-width:750px){.section.quote-band{padding-top:28px;padding-bottom:28px}.quote-band+.sponsor-marquee-section{padding-top:30px}}
+
+/* Black footer, white links, white-and-black social icons */
+footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
+.final-footer a,.final-footer .footer-column>a,.final-footer h3,.final-footer p{color:#fff}
+.final-footer .footer-column>a{opacity:.92}
+.final-footer .footer-column>a:hover{opacity:1;color:#fff;text-decoration:underline}
+.final-footer .footer-bottom{border-top-color:#333}
+.final-footer .footer-bottom p,.final-footer>div:first-child>p{color:#d6d6d6}
+.final-footer .footer-social a{background:#fff;color:#000;border:2px solid #fff}
+.final-footer .footer-social a:hover{background:#000;color:#fff}
+.final-footer a:focus-visible{outline-color:#fff}
