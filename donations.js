@@ -1,5 +1,5 @@
 (() => {
-  const endpoint = 'https://thesoe2.net/BTR/api.php';
+  const endpoints = ['https://www.thesoe2.net/BTR/api.php', 'https://thesoe2.net/BTR/api.php'];
   const status = document.getElementById('giving-status');
   const money = n => new Intl.NumberFormat('en-US', {style:'currency', currency:'USD', maximumFractionDigits:0}).format(n);
   let lastSuccess = null;
@@ -10,10 +10,21 @@
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 10000);
     try {
-      const response = await fetch(endpoint, {cache:'no-store', credentials:'omit', signal:controller.signal});
-      if (!response.ok) throw new Error('Donation source unavailable');
-      const data = await response.json();
-      if (typeof data.current !== 'number' || typeof data.goal !== 'number' || !Number.isFinite(data.current) || !Number.isFinite(data.goal) || data.current < 0 || data.goal <= 0) throw new Error('Invalid donation totals');
+      let raw = null;
+      for (const url of endpoints) {
+        try {
+          const response = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), {cache:'no-store', credentials:'omit', signal:controller.signal});
+          if (response.ok) { raw = await response.json(); break; }
+        } catch {}
+      }
+      if (!raw) throw new Error('Donation source unavailable');
+      const num = v => typeof v === 'number' ? v : (typeof v === 'string' ? parseFloat(v.replace(/[^0-9.]/g, '')) : NaN);
+      const src = raw.data || raw;
+      const data = {
+        current: num(src.current ?? src.raised ?? src.total ?? src.amount ?? src.amount_raised),
+        goal: num(src.goal ?? src.target ?? src.goal_amount)
+      };
+      if (!Number.isFinite(data.current) || !Number.isFinite(data.goal) || data.current < 0 || data.goal <= 0) throw new Error('Invalid donation totals');
       const percent = Math.min(data.current / data.goal * 100, 100);
       document.getElementById('raised-total').textContent = money(data.current);
       document.getElementById('goal-total').textContent = money(data.goal);
