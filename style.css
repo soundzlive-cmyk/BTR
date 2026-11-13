@@ -329,3 +329,7 @@ main img.img-50{width:50%!important;height:auto;justify-self:center;margin-left:
 @media(max-width:750px){.tile-images .source-gallery img{max-height:260px}}
 .tile-images .event-flyer{background:none}
 .tile-images .event-flyer img{width:auto;max-width:100%;margin:0 auto;display:block}
+.section.quote-band{padding-top:36px;padding-bottom:36px}
+.home-campaign+.quote-band{margin-top:-30px}
+.quote-band+.sponsor-marquee-section{padding-top:40px}
+@media(max-width:750px){.section.quote-band{padding-top:28px;padding-bottom:28px}.quote-band+.sponsor-marquee-section{padding-top:30px}}
