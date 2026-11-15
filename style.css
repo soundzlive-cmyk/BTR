@@ -375,3 +375,4 @@ footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
 .sponsor-list li{break-inside:avoid}
 @media(max-width:600px){.sponsor-list{columns:1}}
 .sponsor-list li{margin:0 0 .6em;padding-top:0}
+.rich-copy a.button{text-decoration:none;color:#fff}
