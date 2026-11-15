@@ -348,7 +348,8 @@ footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
 /* Post-gala thank-you popup with rotating photos */
 .thanks-modal .gala-modal-panel{width:min(900px,100%);background:#0b0b0b;color:#fff}
 .tm-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
-.tm-rotator{position:relative;aspect-ratio:4/5;background:#000;overflow:hidden;border-radius:8px 0 0 8px}
+.tm-rotator{position:relative;display:block;width:100%;min-height:220px;background:#000;overflow:hidden;border-radius:8px 0 0 8px}
+.tm-rotator::before{content:"";display:block;padding-top:125%}
 .tm-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}
 .tm-slide.is-active{opacity:1}
 .tm-dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:4px}
@@ -363,7 +364,8 @@ footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
 .thanks-modal .actions .text-link{color:#fff}
 @media(max-width:700px){
  .tm-grid{grid-template-columns:1fr}
- .tm-rotator{aspect-ratio:4/3;border-radius:8px 8px 0 0}
+ .tm-rotator{border-radius:8px 8px 0 0}
+ .tm-rotator::before{padding-top:75%}
  .tm-copy{padding:22px 20px 24px}
 }
 @media(prefers-reduced-motion:reduce){.tm-slide{transition:none}}
