@@ -369,3 +369,9 @@ footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
  .tm-copy{padding:22px 20px 24px}
 }
 @media(prefers-reduced-motion:reduce){.tm-slide{transition:none}}
+
+/* Sponsor thank-you list in stories */
+.sponsor-list{columns:2;column-gap:40px}
+.sponsor-list li{break-inside:avoid}
+@media(max-width:600px){.sponsor-list{columns:1}}
+.sponsor-list li{margin:0 0 .6em;padding-top:0}
