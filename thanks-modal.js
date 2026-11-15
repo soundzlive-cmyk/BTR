@@ -5,7 +5,8 @@
   const KEY = 'btrThanksModalSeen';
   let seen = false;
   try { seen = sessionStorage.getItem(KEY) === '1'; } catch {}
-  if (seen) { modal.remove(); return; }
+  const forced = new URLSearchParams(location.search).has('thanks'); // ?thanks always shows it
+  if (seen && !forced) { modal.remove(); return; }
 
   const panel = modal.querySelector('.gala-modal-panel');
   const slides = [...modal.querySelectorAll('.tm-slide')];
