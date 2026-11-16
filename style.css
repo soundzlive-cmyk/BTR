@@ -376,3 +376,22 @@ footer.final-footer{background:#000;color:#fff;border-top:4px solid var(--gold)}
 @media(max-width:600px){.sponsor-list{columns:1}}
 .sponsor-list li{margin:0 0 .6em;padding-top:0}
 .rich-copy a.button{text-decoration:none;color:#fff}
+
+/* Accessibility: motion controls, contrast, target sizes */
+.rot-toggle{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:4px 14px;border:1px solid rgba(255,255,255,.75);border-radius:999px;background:rgba(0,0,0,.72);color:#fff;font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.rot-toggle:hover{background:#000}
+.rot-toggle:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.rot-toggle[hidden]{display:none}
+.hero-toggle{position:absolute;top:14px;right:14px;z-index:3}
+.sm-actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.sm-toggle{background:#fff;color:var(--ink);border-color:var(--line)}
+.sm-toggle:hover{background:var(--pale)}
+.sm-toggle:focus-visible{outline:3px solid var(--gold)}
+.sponsor-marquee.is-paused .sm-track{animation-play-state:paused}
+.tm-dots{align-items:center}
+.tm-toggle{margin-right:6px;min-height:28px;padding:2px 12px}
+.intake-intro .eyebrow,.intake-welcome .eyebrow{color:#ff6b75}
+#navigation>a,.nav-group>a{min-height:24px;display:inline-flex;align-items:center}
+.footer-column>a{min-height:24px;display:flex;align-items:center}
+input[type=checkbox],input[type=radio]{width:24px!important;height:24px!important;min-width:24px}
+.intake-original{padding:2px 0;min-height:24px}

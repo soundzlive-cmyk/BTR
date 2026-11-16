@@ -35,3 +35,16 @@ document.querySelectorAll('.nav-group').forEach(group => {
   document.addEventListener('click', e => { if (!group.contains(e.target)) set(false); });
   group.addEventListener('keydown', e => { if (e.key === 'Escape' && group.classList.contains('open')) { e.stopPropagation(); set(false); btn.focus(); } });
 });
+
+// Sponsor marquee: pause / play control (WCAG 2.2.2)
+document.querySelectorAll('.sm-toggle').forEach(btn => {
+  const marquee = btn.closest('section')?.nextElementSibling;
+  if (!marquee || !marquee.classList.contains('sponsor-marquee')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { btn.hidden = true; return; }
+  btn.addEventListener('click', () => {
+    const paused = !marquee.classList.contains('is-paused');
+    marquee.classList.toggle('is-paused', paused);
+    btn.setAttribute('aria-pressed', String(paused));
+    btn.textContent = paused ? 'Play scrolling' : 'Pause scrolling';
+  });
+});

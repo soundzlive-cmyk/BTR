@@ -12,14 +12,23 @@
   const slides = [...modal.querySelectorAll('.tm-slide')];
   const dots = [...modal.querySelectorAll('.tm-dot')];
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let index = 0, timer = null, lastFocus = null;
+  let index = 0, timer = null, lastFocus = null, userPaused = false;
+  const toggle = modal.querySelector('.tm-toggle');
+  if (still && toggle) toggle.hidden = true;
 
   const show = i => {
     index = (i + slides.length) % slides.length;
     slides.forEach((s, n) => s.classList.toggle('is-active', n === index));
-    dots.forEach((d, n) => { d.classList.toggle('is-active', n === index); if (n === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+    if (toggle) toggle.addEventListener('click', () => {
+    userPaused = !userPaused;
+    toggle.setAttribute('aria-pressed', String(userPaused));
+    toggle.textContent = userPaused ? 'Play' : 'Pause';
+    toggle.setAttribute('aria-label', userPaused ? 'Play photos' : 'Pause photos');
+    userPaused ? pause() : play();
+  });
+  dots.forEach((d, n) => { d.classList.toggle('is-active', n === index); if (n === index) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
   };
-  const play = () => { if (still || timer) return; timer = setInterval(() => show(index + 1), 4000); };
+  const play = () => { if (still || userPaused || timer) return; timer = setInterval(() => show(index + 1), 4000); };
   const pause = () => { clearInterval(timer); timer = null; };
   dots.forEach((d, n) => d.addEventListener('click', () => { pause(); show(n); play(); }));
   const rot = modal.querySelector('.tm-rotator');
