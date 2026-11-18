@@ -397,3 +397,9 @@ input[type=checkbox],input[type=radio]{width:24px!important;height:24px!importan
 .intake-original{padding:2px 0;min-height:24px}
 @media(min-width:900px){.source-gallery.gallery-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:601px) and (max-width:899px){.source-gallery.gallery-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Story page photo carousel */
+.story-carousel{max-width:none;margin:0 0 40px}
+.story-carousel .carousel-frame{background:#0b0b0b;padding:0;border-radius:6px}
+.story-carousel .carousel-slide{padding:0}
+.story-carousel .carousel-slide img{aspect-ratio:3/2;object-fit:contain;object-position:center;background:#0b0b0b;border:0;box-shadow:none;transform:none;padding:0}
