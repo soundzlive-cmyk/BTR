@@ -12,7 +12,7 @@
  */
 
 // ---- Settings -------------------------------------------------------------
-const NOTIFY_EMAIL = 'info@breakingthroughroadblocks.org'; // '' to turn off email alerts
+const NOTIFY_EMAIL = 'dambroise@breakingthroughroadblocks.org'; // '' to turn off email alerts
 const SIGNATURE_FOLDER_NAME = 'BTR Intake Signatures';
 
 const FORMS = {
