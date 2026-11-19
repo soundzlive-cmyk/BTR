@@ -2,6 +2,10 @@
 (() => {
   const modal = document.getElementById('thanksModal');
   if (!modal) return;
+  // Turned off until further notice. Set to true to bring the popup back.
+  const POPUP_ENABLED = false;
+  const preview = new URLSearchParams(location.search).has('thanks');
+  if (!POPUP_ENABLED && !preview) { modal.remove(); return; }
   const KEY = 'btrThanksModalSeen';
   let seen = false;
   try { seen = sessionStorage.getItem(KEY) === '1'; } catch {}
