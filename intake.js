@@ -58,7 +58,22 @@
     if(!form.checkValidity()){status.textContent='Please complete the required fields and review the indicated information.';form.reportValidity();return false;}
     return true;
   }
-  form.addEventListener('submit',e=>{if(!validate()){e.preventDefault();return;}status.textContent='Sending your intake to BTR’s existing submission service…';});
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(!validate())return;
+    const submit=get('btnSubmit');submit.disabled=true;
+    status.textContent='Sending your intake form…';
+    const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),30000);
+    try{
+      const response=await fetch(window.BTR_FORMS_ENDPOINT,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'},credentials:'omit',signal:controller.signal});
+      let result=null;try{result=await response.json();}catch{}
+      if(!response.ok||!result||!result.ok)throw new Error(result&&result.message?result.message:'Your intake form could not be sent.');
+      form.reset();Object.values(pads).forEach(p=>p.clear());try{localStorage.removeItem(key);}catch{}updateGuardian();
+      status.textContent=result.message||'Thank you! Your intake form has been received.';
+    }catch(error){
+      status.textContent=(error.name==='AbortError'||error instanceof TypeError?'We couldn’t reach the intake service.':error.message)+' Your answers are still on this page — please try again, or use Save draft / Export.';
+    }finally{clearTimeout(timer);submit.disabled=false;}
+  });
   get('btnSave').addEventListener('click',()=>{try{localStorage.setItem(key,JSON.stringify(data()));status.textContent='Draft saved on this device. It has not been submitted.';}catch{status.textContent='This browser could not save your draft. Print or export a copy instead.';}});
   get('btnLoad').addEventListener('click',()=>{try{const raw=localStorage.getItem(key);if(!raw){status.textContent='No saved draft found on this device.';return;}const values=JSON.parse(raw);if(!values||typeof values!=='object'||Array.isArray(values))throw Error();restore(values);status.textContent='Saved draft loaded. Review your details before submitting.';}catch{status.textContent='The saved draft could not be loaded.';}});
   get('btnExport').addEventListener('click',()=>{if(!validate())return;const url=URL.createObjectURL(new Blob([JSON.stringify(data(),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='btr-targets-intake.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Your intake was exported. It has not been submitted.';});
