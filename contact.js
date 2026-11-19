@@ -16,7 +16,7 @@
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 15000);
     try {
-      const response = await fetch(form.action, {method:'POST', body:(() => {const d = new FormData(form); const i = form.elements.interest; if (i && i.value) d.set('comments', `[Interest: ${i.options[i.selectedIndex].text}]\n\n` + d.get('comments')); return d;})(), headers:{Accept:'application/json'}, credentials:'omit', signal:controller.signal});
+      const response = await fetch(window.BTR_FORMS_ENDPOINT, {method:'POST', body:(() => {const d = new FormData(form); const i = form.elements.interest; if (i && i.value) d.set('comments', `[Interest: ${i.options[i.selectedIndex].text}]\n\n` + d.get('comments')); return d;})(), headers:{Accept:'application/json'}, credentials:'omit', signal:controller.signal});
       let result = null;
       try {result = await response.json();} catch {}
       if (!response.ok || !result || !result.ok) throw new Error(result && result.message ? result.message : 'Your message could not be sent.');
