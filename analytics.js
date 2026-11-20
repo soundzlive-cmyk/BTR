@@ -29,7 +29,7 @@
     d.append('title', document.title);
     d.append('ref', ref);
     d.append('vid', vid);
-    d.append('sid', sid);
+    d.append('session', sid); // never name a field "sid": Google rejects it
     d.append('ua', navigator.userAgent);
     d.append('lang', navigator.language || '');
     d.append('screen', `${screen.width}x${screen.height}`);

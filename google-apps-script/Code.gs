@@ -163,7 +163,8 @@ function getAnalyticsSheet() {
 function logPageview(val) {
   const cut = (v, n) => safe(String(v || '').slice(0, n));
   const page = cut(val('page'), 300);
-  const vid = cut(val('vid'), 64), sid = cut(val('sid'), 64);
+  // Field is "session", not "sid": Google rejects web-app requests with a "sid" field.
+  const vid = cut(val('vid'), 64), sid = cut(val('session'), 64);
   if (!page || !vid || !sid) return json({ ok: false });
   getAnalyticsSheet().appendRow([new Date(), page, cut(val('title'), 200), cut(val('ref'), 300), vid, sid,
     cut(val('ua'), 400), cut(val('lang'), 20), cut(val('screen'), 20), cut(val('tz'), 60)]);
