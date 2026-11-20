@@ -22,6 +22,7 @@
       if (!response.ok || !result || !result.ok) throw new Error(result && result.message ? result.message : 'Your message could not be sent.');
       form.reset();
       say(result.message || 'Thank you! Your message has been sent.');
+      location.href = 'thank-you-contact.html';
     } catch (error) {
       say((error.name === 'AbortError' || error instanceof TypeError ? 'We couldn’t reach the message service.' : error.message) + ' Please try again, or email info@breakingthroughroadblocks.org.', true);
     } finally {clearTimeout(timer); submit.disabled = false;}

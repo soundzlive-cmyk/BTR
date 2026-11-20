@@ -47,7 +47,7 @@
       eventSelect.value = keep; // keep the event selected for the next guest
       updateOther();
       say(result.message || 'You’re signed in. Thank you for joining us!');
-      form.elements.firstName.focus();
+      location.href = 'thank-you-signin.html?event=' + encodeURIComponent(eventSelect.selectedOptions[0]?.dataset.slug || '');
     } catch (error) {
       say((error.name === 'AbortError' || error instanceof TypeError ? 'We couldn’t reach the sign-in service.' : error.message) + ' Please try again, or let a BTR team member know you’re here.', true);
     } finally {clearTimeout(timer); submit.disabled = false;}

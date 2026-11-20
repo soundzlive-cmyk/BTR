@@ -29,8 +29,10 @@
       let result = null;
       try {result = await response.json();} catch {}
       if (!response.ok || !result || !result.ok) throw new Error(result && result.message ? result.message : 'Registration could not be sent.');
+      const registered = eventSelect.value;
       form.reset();
       updateHint();
+      location.href = 'thank-you-registration.html?event=' + encodeURIComponent(registered);
       say(result.message || 'Thank you for registering! We look forward to seeing you.');
     } catch (error) {
       say((error.name === 'AbortError' || error instanceof TypeError ? 'We couldn’t reach the registration service.' : error.message) + ' Please try again, or email info@breakingthroughroadblocks.org.', true);

@@ -70,6 +70,7 @@
       if(!response.ok||!result||!result.ok)throw new Error(result&&result.message?result.message:'Your intake form could not be sent.');
       form.reset();Object.values(pads).forEach(p=>p.clear());try{localStorage.removeItem(key);}catch{}updateGuardian();
       status.textContent=result.message||'Thank you! Your intake form has been received.';
+      location.href='thank-you-intake.html';
     }catch(error){
       status.textContent=(error.name==='AbortError'||error instanceof TypeError?'We couldn’t reach the intake service.':error.message)+' Your answers are still on this page — please try again, or use Save draft / Export.';
     }finally{clearTimeout(timer);submit.disabled=false;}
