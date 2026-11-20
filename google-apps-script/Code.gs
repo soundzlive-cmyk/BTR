@@ -177,7 +177,7 @@ function logPageview(val) {
 function statsRequest(val) {
   const cache = CacheService.getScriptCache();
   const fails = Number(cache.get('stats_fails') || 0);
-  if (fails >= 10) return json({ ok: false, message: 'Too many wrong passwords. Try again in 15 minutes.' });
+  if (fails >= 10) return json({ ok: false, message: 'Sign-in is locked after too many wrong passwords. Wait 15 minutes without trying, or run resetDashboardLock in Apps Script.' });
   const pw = PropertiesService.getScriptProperties().getProperty('DASHBOARD_PASSWORD');
   if (!pw) return json({ ok: false, message: 'Dashboard password has not been set up yet.' });
   if (val('password') !== pw) {
@@ -186,6 +186,12 @@ function statsRequest(val) {
     return json({ ok: false, auth: false, message: 'Incorrect password.' });
   }
   return json({ ok: true, data: getDashboardData(val('days')) });
+}
+
+/** Run from the Apps Script editor to clear a dashboard lockout immediately. */
+function resetDashboardLock() {
+  CacheService.getScriptCache().remove('stats_fails');
+  console.log('Dashboard lockout cleared. Sign in at /stats/ again.');
 }
 
 // ---- Aggregation (called from Dashboard.html) -----------------------------
