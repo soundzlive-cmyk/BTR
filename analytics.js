@@ -2,7 +2,7 @@
 // No cookies or IP addresses; a random ID in this browser tells new and returning visitors apart.
 (() => {
   try {
-    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzTAFrFmMs1axA-6F9t6mm25j4rTExbr2lcXauUw-qv1ZUHdKsCfYcAjyerE6HogwkjSQ/exec';
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbydSUNmFs9R92ZiSnmc9bt1DuG-tNrKiLa-QEVeTR90UeXN7dXE4PZX2pZLe8I4o7BaMg/exec';
     if (!/(^|\.)breakingthroughroadblocks\.org$/.test(location.hostname)) return; // skip local previews
     if (navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl) return;
     if (/bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit/i.test(navigator.userAgent)) return;
