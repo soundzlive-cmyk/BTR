@@ -403,3 +403,4 @@ input[type=checkbox],input[type=radio]{width:24px!important;height:24px!importan
 .story-carousel .carousel-frame{background:#0b0b0b;padding:0;border-radius:6px}
 .story-carousel .carousel-slide{padding:0}
 .story-carousel .carousel-slide img{aspect-ratio:3/2;object-fit:contain;object-position:center;background:#0b0b0b;border:0;box-shadow:none;transform:none;padding:0}
+.final-footer .footer-bottom .footer-admin{color:#d6d6d6;font-size:.8rem;letter-spacing:.1em;text-decoration:none}.final-footer .footer-bottom .footer-admin:hover,.final-footer .footer-bottom .footer-admin:focus-visible{color:#fff;text-decoration:underline}
