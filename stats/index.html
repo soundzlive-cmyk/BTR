@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>BTR Website Analytics</title>
+<link rel="icon" href="../btr-logo-transparent.png">
+<style>
+  .viz-root {
+    color-scheme: light;
+    --page: #f4f4f2; --surface-1: #fcfcfb; --border: #e3e2de;
+    --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+    --grid: #ebeae6; --axis: #c9c8c2;
+    --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+    --bar: #2a78d6; --bar-track: #eeeeeb;
+    --good: #0f7b3a; --bad: #c0362c; --brand: #d0141d;
+  }
+  @media (max-width: 520px) { .tile .value { font-size: 24px; } .tile { padding: 12px; } }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      color-scheme: dark;
+      --page: #111110; --surface-1: #1a1a19; --border: #2e2e2c;
+      --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+      --grid: #2a2a28; --axis: #4a4a46;
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+      --bar: #3987e5; --bar-track: #262624;
+      --good: #4cc27a; --bad: #ef6b5f; --brand: #ff4a52;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--page); color: var(--text-primary);
+         font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 20px 40px; }
+  header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  h1 { font-size: 20px; margin: 0; letter-spacing: .01em; }
+  h1 span { color: var(--brand); }
+  .sub { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+  .filters { display: flex; gap: 4px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 3px; }
+  .filters button { border: 0; background: none; color: var(--text-secondary); font: inherit; font-size: 13px;
+                    padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); }
+  .filters button:focus-visible, .linkbtn:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+  .tile .label { color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .tile .value { font-size: 30px; font-weight: 650; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+  .tile .delta { font-size: 12px; color: var(--text-muted); }
+  .delta .up { color: var(--good); } .delta .down { color: var(--bad); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 12px; margin-top: 12px; }
+  h2 { font-size: 14px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+  h2 small { color: var(--text-muted); font-weight: 400; font-size: 12px; }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 2px; vertical-align: middle; margin-right: 6px; border-radius: 1px; }
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; height: 260px; overflow: visible; }
+  .tip { position: absolute; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border);
+         border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.12);
+         white-space: nowrap; opacity: 0; transition: opacity .1s; }
+  .tip b { display: block; margin-bottom: 4px; }
+  .tip div { display: flex; justify-content: space-between; gap: 16px; color: var(--text-secondary); }
+  .tip div span:last-child { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .tip i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .bars { list-style: none; margin: 0; padding: 0; }
+  .bars li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; margin-bottom: 9px; }
+  .bars .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bars .num { color: var(--text-secondary); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .bars .track { grid-column: 1 / -1; height: 6px; background: var(--bar-track); border-radius: 3px; }
+  .bars .fill { height: 6px; background: var(--bar); border-radius: 3px; min-width: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); }
+  th { color: var(--text-secondary); font-weight: 500; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .scroll { max-height: 320px; overflow: auto; }
+  #recent td, #recent th { white-space: nowrap; }
+  #recent td:nth-child(2) { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+  .linkbtn { background: none; border: 0; color: var(--series-1); font: inherit; font-size: 12px; cursor: pointer; padding: 0; }
+  .empty, .status { color: var(--text-muted); padding: 24px 0; text-align: center; }
+  .status.err { color: var(--bad); }
+  .note { color: var(--text-muted); font-size: 12px; margin-top: 16px; }
+  #login { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+  #login form { width: 100%; max-width: 340px; text-align: center; }
+  #login img { width: 84px; height: auto; }
+  #login h1 { margin: 10px 0 4px; }
+  #login p { color: var(--text-secondary); margin: 0 0 16px; font-size: 13px; }
+  #login input { width: 100%; padding: 10px 12px; font: inherit; border: 1px solid var(--border); border-radius: 8px;
+                 background: var(--page); color: var(--text-primary); margin-bottom: 10px; }
+  #login button, .signout { width: 100%; padding: 10px; border: 0; border-radius: 8px; background: var(--brand); color: #fff;
+                 font: inherit; font-weight: 600; cursor: pointer; }
+  #login button:disabled { opacity: .6; cursor: wait; }
+  #loginMsg { color: var(--bad); font-size: 13px; min-height: 1.4em; margin-top: 8px; }
+  .signout { width: auto; padding: 6px 12px; font-size: 13px; background: none; color: var(--text-secondary); border: 1px solid var(--border); }
+  .head-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body class="viz-root">
+<div id="login">
+  <form class="card" id="loginForm">
+    <img src="../btr-logo-transparent.png" alt="Breaking Through Roadblocks">
+    <h1>Website Analytics</h1>
+    <p>This page is private. Enter the dashboard password.</p>
+    <label for="pw" class="sr" style="position:absolute;left:-9999px">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit" id="loginBtn">Sign in</button>
+    <div id="loginMsg" role="alert"></div>
+  </form>
+</div>
+<div class="wrap" id="app" hidden>
+  <header>
+    <div>
+      <h1><span>BTR</span> Website Analytics</h1>
+      <div class="sub" id="updated">Loading…</div>
+    </div>
+    <div class="head-right"><div class="filters" role="group" aria-label="Date range">
+      <button type="button" data-days="7">7 days</button>
+      <button type="button" data-days="30" aria-pressed="true">30 days</button>
+      <button type="button" data-days="90">90 days</button>
+      <button type="button" data-days="365">1 year</button>
+    </div><button type="button" class="signout" id="signout">Sign out</button></div>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <section class="card">
+    <h2>Traffic over time <button class="linkbtn" id="tableToggle" type="button" aria-expanded="false">Show as table</button></h2>
+    <div class="legend" id="legend"></div>
+    <div class="chart" id="trend"><svg role="img" aria-label="Daily hits, visits and unique visitors"></svg><div class="tip" id="tip"></div></div>
+    <div class="scroll" id="trendTable" hidden></div>
+  </section>
+
+  <div class="grid2">
+    <section class="card"><h2>Browsers <small>by visit</small></h2><ul class="bars" id="browsers"></ul></section>
+    <section class="card"><h2>Devices <small>by visit</small></h2><ul class="bars" id="devices"></ul></section>
+    <section class="card"><h2>Operating systems <small>by visit</small></h2><ul class="bars" id="os"></ul></section>
+    <section class="card"><h2>Where visitors came from <small>by visit</small></h2><ul class="bars" id="referrers"></ul></section>
+    <section class="card"><h2>Top pages <small>by hits</small></h2><ul class="bars" id="pages"></ul></section>
+    <section class="card"><h2>Latest page views</h2><div class="scroll" id="recent"></div></section>
+  </div>
+
+  <p class="note">Hits = every page view. Visits = browsing sessions (a visit ends after 30 minutes of inactivity).
+    Unique visitors = different browsers/devices. Visitors who have turned on “Do Not Track,” and bots, are not counted.</p>
+</div>
+
+<script>
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbybdMCkCQkDfuNPqe3OkluHDtybmGvPmJXeaF7aux7ilLj4HfCnWgjc8Hd3hDIMV-d5bg/exec';
+const SERIES = [
+  { k: 'hits', name: 'Hits', color: 'var(--series-1)' },
+  { k: 'visits', name: 'Visits', color: 'var(--series-2)' },
+  { k: 'uniques', name: 'Unique visitors', color: 'var(--series-3)' }
+];
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n).toLocaleString('en-US');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dateLabel = (d, opts) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', opts || { month: 'short', day: 'numeric' });
+let data = null;
+
+let days = 30;
+const PW_KEY = 'btr_stats_pw';
+const getPw = () => { try { return sessionStorage.getItem(PW_KEY) || ''; } catch { return ''; } };
+
+async function request(pw, d) {
+  const body = new FormData();
+  body.append('formType', 'stats'); body.append('password', pw); body.append('days', d);
+  const res = await fetch(ENDPOINT, { method: 'POST', body, credentials: 'omit', headers: { Accept: 'application/json' } });
+  return res.json();
+}
+
+async function load(d) {
+  days = d;
+  document.querySelectorAll('.filters button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.days === days)));
+  $('updated').textContent = 'Loading…';
+  try {
+    const r = await request(getPw(), days);
+    if (r.auth === false) return signOut('Please sign in again.');
+    if (!r.ok) throw new Error(r.message || 'Could not load stats.');
+    data = r.data; render();
+  } catch (err) {
+    $('updated').innerHTML = '<span class="status err">' + esc(err.message || 'Could not reach the stats service.') + '</span>';
+  }
+}
+
+function signOut(msg) {
+  try { sessionStorage.removeItem(PW_KEY); } catch {}
+  $('app').hidden = true; $('login').hidden = false; $('loginMsg').textContent = msg || ''; $('pw').value = ''; $('pw').focus();
+}
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const pw = $('pw').value; if (!pw) return;
+  $('loginBtn').disabled = true; $('loginMsg').textContent = '';
+  try {
+    const r = await request(pw, days);
+    if (!r.ok) throw new Error(r.message || 'Incorrect password.');
+    try { sessionStorage.setItem(PW_KEY, pw); } catch {}
+    $('login').hidden = true; $('app').hidden = false; data = r.data; render();
+  } catch (err) {
+    $('loginMsg').textContent = err instanceof TypeError ? 'Could not reach the stats service.' : err.message;
+  } finally { $('loginBtn').disabled = false; }
+});
+$('signout').addEventListener('click', () => signOut());
+
+function render() {
+  $('updated').textContent = `Last ${data.days} days · updated ${new Date(data.generated).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}`;
+  const t = data.totals, p = data.previous;
+  const pv = t.visits ? (t.hits / t.visits).toFixed(1) : '0';
+  const tiles = [
+    ['Hits', t.hits, p.hits], ['Visits', t.visits, p.visits], ['Unique visitors', t.uniques, p.uniques],
+    ['New visitors', t.newVisitors, null, t.uniques ? Math.round(100 * t.newVisitors / t.uniques) + '% of unique visitors' : ''],
+    ['Pages per visit', pv, null, 'average']
+  ];
+  $('tiles').innerHTML = tiles.map(([label, v, prev, note]) => {
+    let delta = note || '';
+    if (prev !== null && prev !== undefined) {
+      if (!prev) delta = v ? 'no data for previous period' : '';
+      else { const c = Math.round(100 * (v - prev) / prev); delta = `<span class="${c >= 0 ? 'up' : 'down'}">${c >= 0 ? '▲' : '▼'} ${Math.abs(c)}%</span> vs previous ${data.days} days`; }
+    }
+    return `<div class="card tile"><div class="label">${label}</div><div class="value">${typeof v === 'number' ? fmt(v) : v}</div><div class="delta">${delta}</div></div>`;
+  }).join('');
+  $('legend').innerHTML = SERIES.map(s => `<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');
+  trend(); trendTable();
+  bars('browsers', data.browsers); bars('devices', data.devices); bars('os', data.os);
+  bars('referrers', data.referrers); bars('pages', data.pages);
+  $('recent').innerHTML = data.recent.length ? `<table><thead><tr><th>Time</th><th>Page</th><th>Browser · device</th></tr></thead><tbody>${
+    data.recent.map(r => `<tr><td>${new Date(r[0]).toLocaleString('en-US', { month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</td><td title="${esc(r[1])}">${esc(r[1])}</td><td>${esc(r[2])} · ${esc(r[4])}</td></tr>`).join('')
+  }</tbody></table>` : '<div class="empty">No page views yet.</div>';
+}
+
+function bars(id, rows) {
+  const total = rows.reduce((a, r) => a + r[1], 0);
+  const max = rows.length ? rows[0][1] : 1;
+  $(id).innerHTML = rows.length ? rows.map(([name, n]) =>
+    `<li title="${esc(name)}: ${fmt(n)}"><span class="name">${esc(name)}</span><span class="num">${fmt(n)} · ${Math.round(100 * n / total)}%</span>
+     <span class="track"><span class="fill" style="display:block;width:${(100 * n / max).toFixed(1)}%"></span></span></li>`).join('')
+    : '<li class="empty">No data yet.</li>';
+}
+
+function niceMax(v) { if (v <= 5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))); return [1, 2, 2.5, 5, 10].map(m => m * p).find(m => m >= v); }
+
+function trend() {
+  const svg = $('trend').querySelector('svg');
+  const W = svg.clientWidth || 1000, H = 260, L = 40, R = 16, T = 10, B = 26;
+  const pts = data.daily, n = pts.length;
+  const max = niceMax(Math.max(1, ...pts.map(d => d.hits)));
+  const x = i => L + (n === 1 ? (W - L - R) / 2 : i * (W - L - R) / (n - 1));
+  const y = v => T + (H - T - B) * (1 - v / max);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  let g = '';
+  for (let i = 0; i <= 4; i++) {
+    const v = max * i / 4, yy = y(v);
+    g += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" stroke="var(${i ? '--grid' : '--axis'})" stroke-width="1"/>`;
+    g += `<text x="${L - 8}" y="${yy + 4}" text-anchor="end" font-size="11" fill="var(--text-muted)">${fmt(Math.round(v))}</text>`;
+  }
+  const step = Math.max(1, Math.ceil(n / Math.max(2, Math.min(8, Math.floor((W - L - R) / 75)))));
+  pts.forEach((d, i) => { if (i % step === 0)
+    g += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="11" fill="var(--text-muted)">${dateLabel(d.date)}</text>`; });
+  [...SERIES].reverse().forEach(s => {
+    g += `<path d="${pts.map((d, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(d[s.k]).toFixed(1)).join('')}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  g += `<line id="xh" y1="${T}" y2="${H - B}" stroke="var(--axis)" stroke-width="1" visibility="hidden"/>`;
+  g += SERIES.map(s => `<circle class="dot" data-k="${s.k}" r="4" fill="${s.color}" stroke="var(--surface-1)" stroke-width="2" visibility="hidden"/>`).join('');
+  g += `<rect x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="transparent" id="hit"/>`;
+  svg.innerHTML = g;
+
+  const tip = $('tip'), xh = svg.querySelector('#xh'), dots = svg.querySelectorAll('.dot');
+  const show = i => {
+    const d = pts[i], xx = x(i);
+    xh.setAttribute('x1', xx); xh.setAttribute('x2', xx); xh.setAttribute('visibility', 'visible');
+    dots.forEach(c => { c.setAttribute('cx', xx); c.setAttribute('cy', y(d[c.dataset.k])); c.setAttribute('visibility', 'visible'); });
+    tip.innerHTML = `<b>${dateLabel(d.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</b>` +
+      SERIES.map(s => `<div><span><i style="background:${s.color}"></i>${s.name}</span><span>${fmt(d[s.k])}</span></div>`).join('');
+    const box = $('trend').getBoundingClientRect(), px = xx / W * box.width;
+    tip.style.left = Math.min(Math.max(0, px + 12), box.width - tip.offsetWidth) + 'px';
+    if (px + 12 + tip.offsetWidth > box.width) tip.style.left = Math.max(0, px - tip.offsetWidth - 12) + 'px';
+    tip.style.top = '8px'; tip.style.opacity = 1;
+  };
+  const hide = () => { tip.style.opacity = 0; xh.setAttribute('visibility', 'hidden'); dots.forEach(c => c.setAttribute('visibility', 'hidden')); };
+  const hit = svg.querySelector('#hit');
+  hit.addEventListener('pointermove', e => {
+    const r = svg.getBoundingClientRect(), sx = (e.clientX - r.left) * W / r.width;
+    show(Math.max(0, Math.min(n - 1, Math.round(n === 1 ? 0 : (sx - L) / ((W - L - R) / (n - 1))))));
+  });
+  hit.addEventListener('pointerleave', hide);
+}
+
+function trendTable() {
+  $('trendTable').innerHTML = `<table><thead><tr><th>Date</th>${SERIES.map(s => `<th class="n">${s.name}</th>`).join('')}</tr></thead><tbody>${
+    [...data.daily].reverse().map(d => `<tr><td>${dateLabel(d.date, { weekday: 'short', month: 'short', day: 'numeric' })}</td>${SERIES.map(s => `<td class="n">${fmt(d[s.k])}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+
+$('tableToggle').addEventListener('click', e => {
+  const open = $('trendTable').hidden;
+  $('trendTable').hidden = !open; $('trend').hidden = open; $('legend').hidden = open;
+  e.target.textContent = open ? 'Show as chart' : 'Show as table';
+  e.target.setAttribute('aria-expanded', String(open));
+});
+document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => load(+b.dataset.days)));
+window.addEventListener('resize', () => { if (data && !$('trend').hidden) trend(); });
+if (getPw()) { $('login').hidden = true; $('app').hidden = false; load(30); }
+</script>
+</body>
+</html>
