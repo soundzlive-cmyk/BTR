@@ -35,6 +35,7 @@
   const sel = document.getElementById('interest');
   if (!box || !sel) return;
   const msgs = {
+    collaborate: "I'm interested in collaborating or partnering with BTR. Please contact me to discuss.",
     donate: "I'd like to make a donation to BTR. Please share the ways I can give.",
     sponsor: "I'm interested in becoming a BTR sponsor. Please send me sponsorship details.",
     mentor: "I'm interested in becoming a mentor with BTR. Please tell me how to get started.",
