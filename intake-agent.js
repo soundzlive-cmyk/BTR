@@ -118,6 +118,7 @@
     collaborate: { label: 'Collaborate or partner', interest: 'Collaborate / partner' },
     donate: { label: 'Donate', interest: 'Donate' },
     mentor: { label: 'Become a mentor', interest: 'Become a mentor' },
+    targets: { label: 'Interested in T.A.R.G.E.T.S.', interest: 'T.A.R.G.E.T.S. youth program' },
     involved: { label: 'Just get involved', interest: 'Get involved' }
   };
 
@@ -150,6 +151,31 @@
       if (areas) data.notes.push('Mentoring interests: ' + areas);
     }
 
+    if (path === 'targets') {
+      await say('T.A.R.G.E.T.S. (Tenacity Allows Reaching Goals Even Through Struggles) is BTR’s mentorship program for young men and women. It helps them set goals, build confidence, and handle setbacks through mentoring, group discussions, and practical workshops.', 'Who is the program for?');
+      const who = await choose([{ label: 'My child or a young person I care for', value: 'parent' }, { label: 'Myself', value: 'self' }, { label: 'My school or organization', value: 'org' }]);
+      if (who === 'parent') {
+        data.notes.push('Inquiring as: parent/guardian or caregiver');
+        await say('Is the program for a young man or a young woman?');
+        const g = await choose([{ label: 'Young man (boys’ program)', value: 'Boys’ program' }, { label: 'Young woman (girls’ program)', value: 'Girls’ program' }, { label: 'More than one / not sure', value: 'Not sure / more than one' }]);
+        data.notes.push('Program: ' + g);
+        await say('What grade are they in? (optional)');
+        const grade = await ask({ placeholder: 'Grade, e.g. 8th', optional: true });
+        if (grade) data.notes.push('Grade: ' + grade);
+      } else if (who === 'self') {
+        data.notes.push('Inquiring as: young person (self)');
+        await say('Awesome, we’d love to meet you! If you’re under 18, please ask a parent or guardian to fill this out with you.');
+      } else {
+        data.notes.push('Inquiring as: school or organization');
+        await say('What school or organization are you with?');
+        const org = await ask({ placeholder: 'School or organization', optional: true });
+        if (org) data.notes.push('Organization: ' + org);
+      }
+      await say('Ready to enroll? You can fill out the T.A.R.G.E.T.S. intake & consent form now, or leave your contact details and the BTR team will reach out.');
+      const nx = await choose([{ label: 'Open the intake form', value: 'intake' }, { label: 'Have someone contact me', value: 'contact' }]);
+      if (nx === 'intake') { await say('Opening the T.A.R.G.E.T.S. intake form…'); await wait(800); location.href = 'intake.html'; return; }
+    }
+
     if (path === 'involved') {
       await say('We love that! Which of these sounds most interesting?');
       const pick = await choose([{ label: 'Volunteering at events', value: 'Volunteering at events' }, { label: 'Men’s or women’s meetings', value: 'Men’s or women’s meetings' }, { label: 'Youth programs (T.A.R.G.E.T.S.)', value: 'Youth programs (T.A.R.G.E.T.S.)' }, { label: 'Not sure yet', value: 'Not sure yet' }]);
@@ -174,7 +200,7 @@
       if (ok === 'restart') { log.innerHTML = ''; return run(); }
       if (await submit(path)) {
         await say(`Thank you, ${data.firstName}! Your information was sent to the BTR team, and someone will be in touch soon.`);
-        if (path === 'mentor' || path === 'involved') await say('In the meantime, check out our upcoming events.');
+        if (path === 'mentor' || path === 'involved' || path === 'targets') await say('In the meantime, check out our upcoming events.');
         return end(true);
       }
       await say('Sorry, I couldn’t send that right now. Please try again, or email info@breakingthroughroadblocks.org.');
