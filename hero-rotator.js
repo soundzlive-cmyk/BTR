@@ -1,4 +1,4 @@
-// Home banner: crossfade through the hero photos, with a pause control (WCAG 2.2.2).
+// Home banner: crossfade through the hero photos (pause button removed by request; skipped if the visitor prefers reduced motion).
 (() => {
   const slides = [...document.querySelectorAll('.hero-rotator .hero-slide')];
   if (slides.length < 2) return;
